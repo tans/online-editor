@@ -1,16 +1,65 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="./app.min.css">
-	<script type="text/javascript" src="app.js"></script>
-	<title></title>
+	<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="app.js"></script> -->
+	<title>online text editor</title>
+	<style>
+		li {
+			margin-top: 10px;
+			;
+		}
+	</style>
 </head>
-<body>
 
-	<textarea class="border border-2 rounded">
-		type something here
-	</textarea>
+<body>
+	<div class="max-w-screen-sm mx-auto">
+
+		<div class="flex items-center justify-between">
+			<h1 class="font-black text-lg my-4">Online Text Editor</h1>
+			<a class="btn btn-primary btn-sm" href="doclist.html">DOC LIST</a>
+		</div>
+		<h2 class="mt-4 font-black">Features</h2>
+		<ul>
+			<li>
+				<span class="font-serif font-bold">1. No-signup</span> - no need to register, no account system, just
+				open and write
+			</li>
+			<li>
+				<span class="font-serif font-bold">2. Browser Based</span> - no app download, small load size, write in
+				any environment.
+			</li>
+			<li><span class="font-serif font-bold">3. Auto Backup</span> - backup version keep in sever, don't worry
+				wrong
+				edit.
+			</li>
+			<li><span class="font-serif font-bold">4. Local First</span> - auto save in local, manual save to server.
+			</li>
+			<li><span class="font-serif font-bold">5. Keep Secret</span> - set and doc level password, no one can see
+				the
+				content without password
+			</li>
+			<li><span class="font-serif font-bold">6. View Mode</span> - one doc has two url, view url and edit url
+			</li>
+
+			<li><span class="font-serif font-bold">7. Open Source</span> - feel free to modify and deploy another
+				service .
+			</li>
+		</ul>
+
+		<h2 class="mt-4 font-black">Limits</h2>
+		<ul>
+			<li> 1. no rich content support. </li>
+			<li> 2. max 10k charaters </li>
+			<li> 3. online required, can't edit offline </li>
+			<li> 4. no account system, you need keep doc list yourself</li>
+			<li> 5. if you set doc level password, no way to recover if you lost it</li>
+		</ul>
+	</div>
 </body>
+
 </html>
