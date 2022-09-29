@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./app.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/store@2.0.12/dist/store.legacy.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+    <title>Doc LIST | online text editor</title>
+</head>
+
+<body>
+    <div class="max-w-screen-sm mx-auto min-h-screen">
+        <div class="py-2 flex items-center justify-between sticky top-0 bg-white">
+            <a href="/doclist.html" class="btn btn-outline btn-sm">
+                back
+            </a>
+            <div>
+                <button id="save-btn" class="btn btn-primary btn-sm">
+                    save
+                </button>
+                <button id="more-btn" class="btn btn-outline btn-sm">
+                    more
+                </button>
+            </div>
+        </div>
+        <div id="more" class="bg-green-50 p-4 text-2xs hidden">
+            <div>
+                <div>Editable URL:
+                    <span id="editable-url"></span>
+                </div>
+            </div>
+            <div class="mt-2">
+                <div>ViewOnly URL:
+                    <span id="view-url"></span>
+                </div>
+            </div>
+        </div>
+        <textarea id="doc-textarea" data-expandable placeholder="write here ..."
+            class="hidden resize-none border border-gray-200 min-h-16 w-full bg-gray-50 text-sm p-2 mt-2 text-black focus:outline-none"></textarea>
+    </div>
+    <script>
+        let id = new URLSearchParams(location.search).get('id');
+
+        $('#save-btn').on('click', function () {
+            if ($('#save-btn').hasClass('loading')) {
+                return
+            };
+            $('#save-btn').addClass('loading');
+            $.post('/api/doc-save', { id: id, content: $('#doc-textarea').val() }, function (data) {
+                $('#save-btn').removeClass('loading');
+
+            })
+        });
+
+        $('#more-btn').on('click', function () {
+            $('#more').toggle();
+        })
+
+        $(function () {
+            $('#save-btn').addClass('loading').text('')
+            $.get('/api/doc-get?id=' + id, function (doc) {
+                $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
+                $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
+                $('#doc-textarea').show().val(doc.content);
+                $('#save-btn').removeClass('loading').text('save')
+
+                let list = store.get('doc-list');
+                list = list ? JSON.parse(list) : [];
+
+                let filtered = list.filter(function (i) {
+                    return i.id == id
+                });
+                if (filtered.length == 0) {
+                    list.push(doc)
+                    store.set('doc-list', JSON.stringify(list));
+                }
+
+            })
+        });
+        $('body').on('keydown input', 'textarea[data-expandable]', function () {
+            //Auto-expanding textarea
+            this.style.removeProperty('height');
+            this.style.height = (this.scrollHeight + 2) + 'px';
+        }).on('mousedown focus', 'textarea[data-expandable]', function () {
+            //Do this on focus, to allow textarea to animate to height...
+            this.style.removeProperty('height');
+            this.style.height = (this.scrollHeight + 2) + 'px';
+        });
+    </script>
+</body>
+
+</html>

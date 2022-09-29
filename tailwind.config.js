@@ -8,12 +8,12 @@ module.exports = {
     daisyui: {
         themes: [
             {
-                corporate: {
+                light: {
                     "neutral-content": "#edf2f7",
                     "base-content": "#181a2a",
-                    "--rounded-box": "0.5rem",
-                    "--rounded-btn": ".125rem",
-                    "--rounded-badge": ".125rem",
+                    "--rounded-box": "0",
+                    "--rounded-btn": "0",
+                    "--rounded-badge": "0",
                     "--animation-btn": "0",
                     "--animation-input": "0",
                     "--btn-focus-scale": "1",

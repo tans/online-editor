@@ -1,9 +1,10 @@
 {
-  "devDependencies": {
-    "daisyui": "^2.31.0",
-    "tailwindcss": "^3.1.8"
-  },
-  "dependencies": {
-    "mongodb": "^4.10.0"
-  }
+    "devDependencies": {
+        "daisyui": "^2.31.0",
+        "tailwindcss": "^3.1.8"
+    },
+    "dependencies": {
+        "mongodb": "^4.10.0",
+        "nanoid": "^4.0.0"
+    }
 }
