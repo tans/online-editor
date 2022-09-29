@@ -42,14 +42,15 @@
     </div>
     <script>
         let id = new URLSearchParams(location.search).get('id');
-
-        $('#save-btn').on('click', function () {
-            if ($('#save-btn').hasClass('loading')) {
+        let $textarea = $('#doc-textarea');
+        let $saveBtn = $('#save-btn')
+        $saveBtn.on('click', function () {
+            if ($saveBtn.hasClass('loading')) {
                 return
             };
-            $('#save-btn').addClass('loading');
+            $saveBtn.addClass('loading');
             $.post('/api/doc-save', { id: id, content: $('#doc-textarea').val() }, function (data) {
-                $('#save-btn').removeClass('loading');
+                $saveBtn.removeClass('loading');
 
             })
         });
@@ -59,12 +60,16 @@
         })
 
         $(function () {
-            $('#save-btn').addClass('loading').text('')
+            $saveBtn.addClass('loading').text('')
             $.get('/api/doc-get?id=' + id, function (doc) {
                 $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
                 $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
-                $('#doc-textarea').show().val(doc.content);
-                $('#save-btn').removeClass('loading').text('save')
+
+                $textarea.show().val(doc.content);
+                $textarea[0].style.removeProperty('height');
+                $textarea[0].style.height = ($textarea[0].scrollHeight + 2) + 'px';
+
+                $saveBtn.removeClass('loading').text('save')
 
                 let list = store.get('doc-list');
                 list = list ? JSON.parse(list) : [];
