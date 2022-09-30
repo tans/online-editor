@@ -54,13 +54,20 @@
             let list = store.get('doc-list');
             list = list ? JSON.parse(list) : []
             $('#list-container').html(list.map(function (doc) {
-                console.log(doc)
-                return `<a href="/doc.html?id=${doc.id}" class="p-2 my-2 bg-gray-50 border border-gray-100 flex"><div class="flex-1"> https://doc.op52.com/doc.html?id=${doc.id}</div><div class="text-blue-900">${new Date(doc.createTime).toLocaleString()}</div ></a >`
+
+                return `<a href="/doc.html?id=${doc.id}" class="p-2 my-2 bg-gray-50 border block border-gray-100 "><div class="flex"><div class="flex-1"> https://doc.op52.com/doc.html?id=${doc.id}</div><div class="text-blue-900 ">${new Date(doc.createTime).toLocaleString()}</div ></div><div class="font-black line-clamp-5" id="doc-${doc.id}"></div></a >`
             }).join(''))
 
             if (list.length == 0) {
                 $('#list-container').html('no doc in local storage, creat one.').addClass(['m-4', 'text-center'])
             }
+
+            list.map(function (doc) {
+                let docDetail = store.get('doc-' + doc.id)
+                if (docDetail && docDetail.content) {
+                    $('#doc-' + doc.id).html(store.get('doc-' + doc.id).content.replace(/\n/g, '<br/>'))
+                }
+            });
         })
 
     </script>

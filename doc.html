@@ -82,6 +82,7 @@
                     store.set('doc-list', JSON.stringify(list));
                 }
 
+                store.set('doc-' + id, doc);
             })
         });
         $('body').on('keydown input', 'textarea[data-expandable]', function () {
