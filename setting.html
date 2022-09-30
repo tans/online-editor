@@ -20,27 +20,28 @@
                 <button id="save-btn" class="btn btn-primary btn-sm">
                     save
                 </button>
-                <a id="set-btn" target="_blank" class="btn btn-outline btn-sm">
-                    setting
-                </a>
+                <button id="more-btn" class="btn btn-outline btn-sm">
+                    more
+                </button>
             </div>
         </div>
-
-        <div id="loading" class="p-20">
-            <svg class="text-blue-500 animate-spin  mx-auto h-5 w-5" xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24" fill="none">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                </path>
-            </svg>
+        <div id="more" class="bg-green-50 p-4 text-2xs hidden">
+            <div>
+                <div>Editable URL:
+                    <span id="editable-url"></span>
+                </div>
+            </div>
+            <div class="mt-2">
+                <div>ViewOnly URL:
+                    <span id="view-url"></span>
+                </div>
+            </div>
         </div>
         <textarea id="doc-textarea" data-expandable placeholder="write here ..."
             class="hidden resize-none border border-gray-200 min-h-16 w-full bg-gray-50 text-sm p-2 mt-2 text-black focus:outline-none"></textarea>
     </div>
     <script>
         let id = new URLSearchParams(location.search).get('id');
-        $('#set-btn').attr('href', 'setting.html?id=' + id);
         let $textarea = $('#doc-textarea');
         let $saveBtn = $('#save-btn')
         $saveBtn.on('click', function () {
@@ -54,16 +55,22 @@
             })
         });
 
+        $('#more-btn').on('click', function () {
+            $('#more').toggle();
+        })
+
         $(function () {
             $saveBtn.addClass('loading').text('')
             $.get('/api/doc-get?id=' + id, function (doc) {
                 $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
                 $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
-                $('#loading').hide();
+
                 $textarea.show().val(doc.content);
                 $textarea[0].style.removeProperty('height');
                 $textarea[0].style.height = ($textarea[0].scrollHeight + 2) + 'px';
+
                 $saveBtn.removeClass('loading').text('save')
+
                 let list = store.get('doc-list');
                 list = list ? JSON.parse(list) : [];
 

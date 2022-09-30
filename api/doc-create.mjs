@@ -1,7 +1,9 @@
-import { MongoClient } from "mongodb";
+import clientPromise from "./db.mjs";
+
 import { nanoid } from "nanoid";
+
 export default async function handler(request, response) {
-    let client = await new MongoClient(process.env.MONGODB_URI);
+    const client = await clientPromise;
     const db = client.db("online-editor");
     const collection = db.collection("documents");
     let model = {};
@@ -10,6 +12,5 @@ export default async function handler(request, response) {
     model.createTime = new Date();
     let inserted = await collection.insertOne(model);
     let newModel = await collection.findOne(inserted.insertedId);
-    client.close();
     response.json(newModel);
 }
