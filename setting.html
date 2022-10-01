@@ -12,7 +12,7 @@
 
 <body>
     <div class="max-w-screen-sm mx-auto min-h-screen p-1">
-        <div class="py-2 flex items-center justify-between sticky top-0 bg-white">
+        <!-- <div class="py-2 flex items-center justify-between sticky top-0 bg-white">
             <a href="/doclist.html" class="btn btn-outline btn-sm">
                 back
             </a>
@@ -21,8 +21,8 @@
                     save
                 </button>
             </div>
-        </div>
-        <div id="more" class="bg-green-50 p-4 text-2xs  ">
+        </div> -->
+        <div class="bg-green-50 p-4 text-2xs  ">
             <div>
                 <div>Editable URL:
                     <span id="editable-url"></span>
@@ -42,24 +42,12 @@
     </div>
     <script>
         let id = new URLSearchParams(location.search).get('id');
-        let $title = $('#doc-title');
-        let $saveBtn = $('#save-btn')
-        $saveBtn.on('click', function () {
-            if ($saveBtn.hasClass('loading')) {
-                return
-            };
-            // $saveBtn.addClass('loading');
-            $.post('/api/doc-set-title', { id: id, title: $title.val(), password: $('#doc-password').val() }, function (data) {
-                $saveBtn.removeClass('loading');
-            })
-        });
+
+
         $(function () {
-            $saveBtn.addClass('loading').text('')
             $.get('/api/doc-get?id=' + id, function (doc) {
                 $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
                 $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
-                $saveBtn.removeClass('loading').text('save')
-                $title.val(doc.title);
             })
         });
     </script>

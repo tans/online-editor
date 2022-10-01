@@ -20,12 +20,23 @@
                 <button id="save-btn" class="btn btn-primary btn-sm mr-2">
                     save
                 </button>
-                <a id="set-btn" target="_blank" class="btn btn-outline btn-sm">
+                <!-- <button id="more-btn" class="btn btn-outline btn-sm">
                     more
-                </a>
+                </button> -->
             </div>
         </div>
-
+        <div id="more" class="bg-green-50 p-4 text-2xs hidden ">
+            <div>
+                <div>Editable URL:
+                    <span id="editable-url"></span>
+                </div>
+            </div>
+            <div class="mt-2">
+                <div>ViewOnly URL:
+                    <span id="view-url"></span>
+                </div>
+            </div>
+        </div>
         <div id="loading" class="p-20">
             <svg class="text-blue-500 animate-spin  mx-auto h-5 w-5" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24" fill="none">
@@ -50,16 +61,16 @@
             $saveBtn.addClass('loading');
             $.post('/api/doc-save', { id: id, content: $('#doc-textarea').val() }, function (data) {
                 $saveBtn.removeClass('loading');
-
             })
         });
 
         $(function () {
             $saveBtn.addClass('loading').text('')
             $.get('/api/doc-get?id=' + id, function (doc) {
-                // $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
-                // $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
+                $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
+                $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
                 $('#loading').hide();
+                $('#more').show();
                 $textarea.show().val(doc.content);
                 $textarea[0].style.removeProperty('height');
                 $textarea[0].style.height = ($textarea[0].scrollHeight + 2) + 'px';
