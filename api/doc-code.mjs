@@ -5,6 +5,6 @@ export default async function handler(request, response) {
     const db = client.db("online-editor");
     const collection = db.collection("document_codes");
 
-    let code = await collection.findOne({ no: no });
+    let code = await collection.findOne({ no: no, today: today });
     response.json(code);
 }

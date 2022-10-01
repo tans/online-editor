@@ -13,13 +13,16 @@ export default async function handler(request, response) {
         throw new Error("no doc");
     }
 
+    let today = new Date().toDateString();
     doc.code = await db.collection("document_codes").findOne({
         id: doc.id,
+        today: today,
     });
 
     if (!doc.code) {
         doc.code = {
             id: doc.id,
+            today: today,
             no: nanoid(),
         };
         await db.collection("document_codes").insert(doc.code);
