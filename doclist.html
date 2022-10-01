@@ -20,19 +20,6 @@
                 New Doc
             </button>
         </div>
-
-
-        <div class="alert alert-warning">
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <span>DOC LIST save in browser, it would easy to lost, copy and save to other place. </span>
-            </div>
-        </div>
-
         <div id="list-container" class="text-sm">
 
         </div>
@@ -54,8 +41,7 @@
             let list = store.get('doc-list');
             list = list ? JSON.parse(list) : []
             $('#list-container').html(list.map(function (doc) {
-
-                return `<a href="/doc.html?id=${doc.id}" class="p-2 my-2 bg-gray-50 border block border-gray-100 "><div class="flex"><div class="flex-1"> https://doc.op52.com/doc.html?id=${doc.id}</div><div class="text-blue-900 ">${new Date(doc.createTime).toLocaleString()}</div ></div><div class="font-black line-clamp-5" id="doc-${doc.id}"></div></a >`
+                return `<div  class="my-4 rounded bg-gray-50 border block border-gray-100 text-xs"><div class="flex p-2 bg-gray-200"><div class="flex-1"> https://doc.op52.com/doc.html?id=${doc.id}</div><div class="text-blue-900 ">${new Date(doc.createTime).toLocaleString()}</div ></div><a  target="_blank" href="/doc.html?id=${doc.id}" class="block font-black line-clamp-5 p-2" id="doc-${doc.id}"></a></div>`
             }).join(''))
 
             if (list.length == 0) {
@@ -64,9 +50,8 @@
 
             list.map(function (doc) {
                 let docDetail = store.get('doc-' + doc.id)
-                if (docDetail && docDetail.content) {
-                    $('#doc-' + doc.id).html(store.get('doc-' + doc.id).content.replace(/\n/g, '<br/>'))
-                }
+                let content = (docDetail && docDetail.content) ? docDetail.content : 'no content '
+                $('#doc-' + doc.id).html(content.replace(/\n/g, '<br/>'))
             });
         })
 

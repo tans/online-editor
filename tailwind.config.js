@@ -8,7 +8,7 @@ module.exports = {
     daisyui: {
         themes: [
             {
-                light: {
+                corporate: {
                     "neutral-content": "#edf2f7",
                     "base-content": "#181a2a",
                     "--rounded-box": "0",
@@ -17,13 +17,15 @@ module.exports = {
                     "--animation-btn": "0",
                     "--animation-input": "0",
                     "--btn-focus-scale": "1",
-                    primary: "#22c55e",
+                    primary: "#3988FF",
                     secondary: "#377CFB",
                     accent: "#EA5234",
                     neutral: "#333C4D",
                     "base-100": "#FFFFFF",
+                    "base-200": "#F0F2F1",
+                    "base-300": "#F0F2F1",
                     info: "#3ABFF8",
-                    success: "#22c55e",
+                    success: "#3988FF",
                     warning: "#FBBD23",
                     error: "#F87272",
                 },

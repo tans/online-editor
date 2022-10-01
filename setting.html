@@ -20,12 +20,9 @@
                 <button id="save-btn" class="btn btn-primary btn-sm">
                     save
                 </button>
-                <button id="more-btn" class="btn btn-outline btn-sm">
-                    more
-                </button>
             </div>
         </div>
-        <div id="more" class="bg-green-50 p-4 text-2xs hidden">
+        <div id="more" class="bg-green-50 p-4 text-2xs  ">
             <div>
                 <div>Editable URL:
                     <span id="editable-url"></span>
@@ -37,62 +34,33 @@
                 </div>
             </div>
         </div>
-        <textarea id="doc-textarea" data-expandable placeholder="write here ..."
-            class="hidden resize-none border border-gray-200 min-h-16 w-full bg-gray-50 text-sm p-2 mt-2 text-black focus:outline-none"></textarea>
+        <input id="doc-title" placeholder="set title to support search" class="border border-gray-200   w-full
+            bg-gray-50 text-sm p-2 mt-2 text-black focus:outline-none"></input>
+
+        <input id="doc-password" placeholder="set password to keep save" class="border border-gray-200   w-full
+            bg-gray-50 text-sm p-2 mt-2 text-black focus:outline-none"></input>
     </div>
     <script>
         let id = new URLSearchParams(location.search).get('id');
-        let $textarea = $('#doc-textarea');
+        let $title = $('#doc-title');
         let $saveBtn = $('#save-btn')
         $saveBtn.on('click', function () {
             if ($saveBtn.hasClass('loading')) {
                 return
             };
-            $saveBtn.addClass('loading');
-            $.post('/api/doc-save', { id: id, content: $('#doc-textarea').val() }, function (data) {
+            // $saveBtn.addClass('loading');
+            $.post('/api/doc-set-title', { id: id, title: $title.val(), password: $('#doc-password').val() }, function (data) {
                 $saveBtn.removeClass('loading');
-
             })
         });
-
-        $('#more-btn').on('click', function () {
-            $('#more').toggle();
-        })
-
         $(function () {
             $saveBtn.addClass('loading').text('')
             $.get('/api/doc-get?id=' + id, function (doc) {
                 $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
                 $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
-
-                $textarea.show().val(doc.content);
-                $textarea[0].style.removeProperty('height');
-                $textarea[0].style.height = ($textarea[0].scrollHeight + 2) + 'px';
-
                 $saveBtn.removeClass('loading').text('save')
-
-                let list = store.get('doc-list');
-                list = list ? JSON.parse(list) : [];
-
-                let filtered = list.filter(function (i) {
-                    return i.id == id
-                });
-                if (filtered.length == 0) {
-                    list.push(doc)
-                    store.set('doc-list', JSON.stringify(list));
-                }
-
-                store.set('doc-' + id, doc);
+                $title.val(doc.title);
             })
-        });
-        $('body').on('keydown input', 'textarea[data-expandable]', function () {
-            //Auto-expanding textarea
-            this.style.removeProperty('height');
-            this.style.height = (this.scrollHeight + 2) + 'px';
-        }).on('mousedown focus', 'textarea[data-expandable]', function () {
-            //Do this on focus, to allow textarea to animate to height...
-            this.style.removeProperty('height');
-            this.style.height = (this.scrollHeight + 2) + 'px';
         });
     </script>
 </body>

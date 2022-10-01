@@ -16,12 +16,12 @@
             <a href="/doclist.html" class="btn btn-outline btn-sm">
                 back
             </a>
-            <div>
-                <button id="save-btn" class="btn btn-primary btn-sm">
+            <div class="flex items-center">
+                <button id="save-btn" class="btn btn-primary btn-sm mr-2">
                     save
                 </button>
                 <a id="set-btn" target="_blank" class="btn btn-outline btn-sm">
-                    setting
+                    more
                 </a>
             </div>
         </div>
@@ -57,8 +57,8 @@
         $(function () {
             $saveBtn.addClass('loading').text('')
             $.get('/api/doc-get?id=' + id, function (doc) {
-                $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
-                $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
+                // $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
+                // $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
                 $('#loading').hide();
                 $textarea.show().val(doc.content);
                 $textarea[0].style.removeProperty('height');

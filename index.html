@@ -5,8 +5,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="./app.min.css">
-	<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
-	<script type="text/javascript" src="app.js"></script> -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="search.js"></script>
 	<title>online text editor</title>
 	<style>
 		li {
@@ -23,29 +23,49 @@
 			<h1 class="font-black text-lg my-4">Online Text Editor</h1>
 			<a class="btn btn-primary btn-sm" href="doclist.html">DOC LIST</a>
 		</div>
+
+		<div id="search-box" class="my-8 relative">
+			<input class="block w-full border-2 border-black p-2" placeholder="QUICK SEARCE" />
+			<svg class="hidden text-blue-500 animate-spin h-5 w-5 absolute top-3 right-3"
+				xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+				<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+				<path class="opacity-75" fill="currentColor"
+					d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+				</path>
+			</svg>
+			<span
+				class="animate-ping h-3 w-3 inline-block absolute top-4 right-4  rounded-full bg-blue-500 opacity-75"></span>
+			<span class="h-3 w-3 inline-block absolute top-4 right-4  rounded-full bg-blue-500 opacity-75"></span>
+			<div class="text-gray-300 mb-1 text-xs">Only title seted docs could search here</div>
+		</div>
 		<h2 class="mt-4 font-black">Features</h2>
-		<ul>
+		<ul class="text-sm">
 			<li>
-				<span class="font-serif font-bold">1. No-signup</span> - no need to register, no account system, just
+				<span class="font-serif font-bold block mt-3">1. No-signup</span> - no need to register, no
+				account system, just
 				open and write
 			</li>
 			<li>
-				<span class="font-serif font-bold">2. Browser Based</span> - no app download, small load size, write in
+				<span class="font-serif font-bold block mt-3">2. Browser Based</span> - no app download, small
+				load size, write in
 				any environment.
 			</li>
-			<li><span class="font-serif font-bold">3. Auto Backup</span> - backup version keep in sever, don't worry
+			<li><span class="font-serif font-bold block mt-3">3. Auto Backup</span> - backup version keep in
+				sever, don't worry
 				wrong
 				edit.
 			</li>
-			<!-- <li><span class="font-serif font-bold">4. Local First</span> - auto save in local, manual save to server.
+			<!-- <li><span class="font-serif font-bold block mt-3">4. Local First</span> - auto save in local, manual save to server.
 			</li> -->
-			<li><span class="font-serif font-bold">4. No ADs</span> - no ad, no fee.
+			<li><span class="font-serif font-bold block mt-3">4. No ADs</span> - no ad, no fee.
 			</li>
-			<li><span class="font-serif font-bold">5. Keep Secret</span> - set and doc level password, no one can see
+			<li><span class="font-serif font-bold block mt-3">5. Keep Secret</span> - set and doc level password,
+				no one can see
 				the
 				content without password
 			</li>
-			<li><span class="font-serif font-bold">6. View Mode</span> - one doc has two url, view url and edit url
+			<li><span class="font-serif font-bold block mt-3">6. View Mode</span> - one doc has two url, view url
+				and edit url
 			</li>
 
 		</ul>
