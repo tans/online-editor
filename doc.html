@@ -29,6 +29,8 @@
             <div>
                 <div>Editable URL:
                     <span id="editable-url"></span>
+
+                    [<span class="text-red-500" id="editable-code"></span>]
                 </div>
             </div>
             <div class="mt-2">
@@ -68,6 +70,7 @@
             $saveBtn.addClass('loading').text('')
             $.get('/api/doc-get?id=' + id, function (doc) {
                 $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
+                $('#editable-code').text(doc.code.no)
                 $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
                 $('#loading').hide();
                 $('#more').show();
