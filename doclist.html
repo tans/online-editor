@@ -25,11 +25,11 @@
 
         <div class="text-center">
             <div class="mt-4 inline-block mx-auto">
-                <div class="input-group mx-auto">
+                <div class="input-group mx-auto" id="code-input-container">
                     <input id="code-input" type="text" placeholder="share code"
                         class="input input-sm input-bordered focus:outline-none" />
                     <button class="btn btn-square btn-primary btn-sm" onclick="codeToDoc()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -55,11 +55,20 @@
 
         let codeToDoc = function () {
             let no = $('#code-input').val();
-            $.get('/api/doc-code?no=' + no, function (code) {
-                console.log(code);
 
+            if($('#code-input-container .btn').hasClass('loading')){
+                return;
+            }
+            
+            $('#code-input-container .btn svg').hide();
+            $('#code-input-container .btn').addClass('loading');
+            $.get('/api/doc-code?no=' + no, function (code) {
+                $('#code-input-container .btn').removeClass('loading');
+                $('#code-input-container .btn svg').show();
                 if (code) {
                     location.href = "/doc.html?id=" + code.id
+                }else{
+                    alert('code incorrect')
                 }
             })
         }
