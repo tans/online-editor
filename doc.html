@@ -65,10 +65,10 @@
             "positionClass": "toast-bottom-right",
             "preventDuplicates": false,
             "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
+            "showDuration": "200",
+            "hideDuration": "500",
+            "timeOut": "1000",
+            "extendedTimeOut": "500",
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
@@ -88,6 +88,9 @@
             $.post('/api/doc-save', { id: id, content: $('#doc-textarea').val() }, function (data) {
                 $saveBtn.removeClass('loading');
                 toastr["info"]("save successful")
+            }, function () {
+                $saveBtn.removeClass('loading');
+                toastr["error"]("save fail")
             })
         });
 
