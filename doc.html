@@ -88,7 +88,7 @@
             $.post('/api/doc-save', { id: id, content: $('#doc-textarea').val() }, function (data) {
                 $saveBtn.removeClass('loading');
                 toastr["info"]("save successful")
-            }, function () {
+            }).fail(function () {
                 $saveBtn.removeClass('loading');
                 toastr["error"]("save fail")
             })
