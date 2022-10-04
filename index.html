@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="./app.min.css">
-	<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script> -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 	<title>online text editor</title>
 	<style>
 		li {
@@ -23,6 +23,24 @@
 			<a class="btn btn-primary btn-sm" href="doclist.html">DOC LIST</a>
 		</div>
 
+
+		<div class="text-center">
+			<div class="my-8 inline-block mx-auto">
+				<div class="input-group mx-auto" id="code-input-container">
+					<input id="code-input" type="text" placeholder="Share Code"
+						class="input input-sm input-bordered focus:outline-none" />
+					<button class="btn btn-square btn-primary btn-sm" onclick="codeToDoc()">
+						<svg viewBox="0 0 24 24" class="w-4 h-4" stroke="currentColor" stroke-width="2" fill="none"
+							stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+							<line x1="22" y1="2" x2="11" y2="13"></line>
+							<polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+
+
 		<!-- <div id="search-box" class="my-8 relative">
 			<input class="block w-full border-2 border-black p-2" placeholder="QUICK SEARCE" />
 			<svg class="hidden text-blue-500 animate-spin h-5 w-5 absolute top-3 right-3"
@@ -37,47 +55,72 @@
 			<span class="h-3 w-3 inline-block absolute top-4 right-4  rounded-full bg-blue-500 opacity-75"></span>
 			<div class="text-gray-300 mb-1 text-xs">Only title seted docs could search here</div>
 		</div> -->
-		<h2 class="mt-4 font-black">Features</h2>
+		<h2 class="mt-4 text-2xl font-black">Features</h2>
 		<ul class="text-sm">
 			<li>
-				<span class="font-serif font-bold block mt-3">1. No-signup</span> - no need to register, no
+				<span class="font-serif font-bold text-xl block mt-3">No-signup</span> - no need to register, no
 				account system, just
 				open and write
 			</li>
 			<li>
-				<span class="font-serif font-bold block mt-3">2. Browser Based</span> - no app download, small
-				load size, write in
+				<span class="font-serif font-bold text-xl block mt-3">Cloud-Based</span> - no app download, small
+				load size, used in
 				any environment.
 			</li>
-			<li><span class="font-serif font-bold block mt-3">3. Auto Backup</span> - backup version keep in
+			<!-- <li><span class="font-serif font-bold text-xl block mt-3">3. Auto Backup</span> - backup version keep in
 				sever, don't worry
 				wrong
 				edit.
-			</li>
-			<!-- <li><span class="font-serif font-bold block mt-3">4. Local First</span> - auto save in local, manual save to server.
 			</li> -->
-			<li><span class="font-serif font-bold block mt-3">4. No ADs</span> - no ad, no fee.
+			<!-- <li><span class="font-serif font-bold text-xl block mt-3">4. Local First</span> - auto save in local, manual save to server.
+			</li> -->
+			<li><span class="font-serif font-bold text-xl block mt-3">No-ADs</span> - no ad, no fee.
 			</li>
-			<li><span class="font-serif font-bold block mt-3">5. Keep Secret</span> - set and doc level password,
+			<!-- <li><span class="font-serif font-bold text-xl block mt-3">*. Keep Secret</span> - set and doc level password,
 				no one can see
 				the
 				content without password
-			</li>
-			<li><span class="font-serif font-bold block mt-3">6. View Mode</span> - one doc has two url, view url
+			</li> -->
+			<!-- <li><span class="font-serif font-bold text-xl block mt-3">6. View Mode</span> - one doc has two url, view url
 				and edit url
-			</li>
+			</li> -->
 
 		</ul>
-
-		<h2 class="mt-4 font-black">Limits</h2>
-		<ul>
-			<li> 1. no rich content support. </li>
-			<li> 2. max 10k charaters </li>
-			<li> 3. online required, can't edit offline </li>
-			<li> 4. no account system, you need keep doc list yourself</li>
-			<li> 5. if you set doc level password, no way to recover if you lost it</li>
-		</ul>
+		<div class="text-gray-600">
+			<h2 class="mt-8 font-black">Limits</h2>
+			<ul>
+				<li> 1. no rich content support. </li>
+				<li> 2. max 10k charaters </li>
+				<li> 3. online required, can't edit offline </li>
+				<li> 4. no account system, you need keep doc list yourself</li>
+				<!-- <li> 5. if you set doc level password, no way to recover if you lost it</li> -->
+			</ul>
+		</div>
 	</div>
+
+	<script>
+
+
+		let codeToDoc = function () {
+			let no = $('#code-input').val();
+			if ($('#code-input-container .btn').hasClass('loading')) {
+				return;
+			}
+
+			$('#code-input-container .btn svg').hide();
+			$('#code-input-container .btn').addClass('loading');
+			$.get('/api/doc-code?no=' + no, function (code) {
+				$('#code-input-container .btn').removeClass('loading');
+				$('#code-input-container .btn svg').show();
+				if (code) {
+					location.href = "/doc.html?id=" + code.id
+				} else {
+					alert('code incorrect')
+				}
+			})
+		}
+
+	</script>
 </body>
 
 </html>

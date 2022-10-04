@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="./app.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/store@2.0.12/dist/store.legacy.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js"></script>
     <title>Doc LIST | online text editor</title>
 </head>
 
@@ -30,14 +32,16 @@
                 <div>Editable URL:
                     <span id="editable-url"></span>
 
+                </div>
+                <div>Share Code:
                     [<span class="text-red-500" id="editable-code"></span>]
                 </div>
             </div>
-            <div class="mt-2">
+            <!-- <div class="mt-2">
                 <div>ViewOnly URL:
                     <span id="view-url"></span>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div id="loading" class="p-20">
             <svg class="text-blue-500 animate-spin  mx-auto h-5 w-5" xmlns="http://www.w3.org/2000/svg"
@@ -52,6 +56,26 @@
             class="hidden resize-none border border-gray-200 min-h-16 w-full bg-gray-50 text-sm p-2 mt-2 text-black focus:outline-none"></textarea>
     </div>
     <script>
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
         let id = new URLSearchParams(location.search).get('id');
         $('#set-btn').attr('href', 'setting.html?id=' + id);
         let $textarea = $('#doc-textarea');
@@ -90,6 +114,8 @@
                 }
 
                 store.set('doc-' + id, doc);
+
+                toastr["info"]("save successful")
             })
         });
         $('body').on('keydown input', 'textarea[data-expandable]', function () {

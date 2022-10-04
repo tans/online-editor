@@ -29,10 +29,10 @@
                     <input id="code-input" type="text" placeholder="share code"
                         class="input input-sm input-bordered focus:outline-none" />
                     <button class="btn btn-square btn-primary btn-sm" onclick="codeToDoc()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        <svg viewBox="0 0 24 24" class="w-4 h-4" stroke="currentColor" stroke-width="2" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                         </svg>
                     </button>
                 </div>
@@ -55,11 +55,10 @@
 
         let codeToDoc = function () {
             let no = $('#code-input').val();
-
-            if($('#code-input-container .btn').hasClass('loading')){
+            if ($('#code-input-container .btn').hasClass('loading')) {
                 return;
             }
-            
+
             $('#code-input-container .btn svg').hide();
             $('#code-input-container .btn').addClass('loading');
             $.get('/api/doc-code?no=' + no, function (code) {
@@ -67,7 +66,7 @@
                 $('#code-input-container .btn svg').show();
                 if (code) {
                     location.href = "/doc.html?id=" + code.id
-                }else{
+                } else {
                     alert('code incorrect')
                 }
             })
@@ -76,7 +75,7 @@
             let list = store.get('doc-list');
             list = list ? JSON.parse(list) : []
             $('#list-container').html(list.map(function (doc) {
-                return `<div  class="my-4 rounded bg-gray-50 border block border-gray-100 text-xs"><div class="flex p-2 bg-gray-200"><div class="flex-1"> https://doc.op52.com/doc.html?id=${doc.id}</div><div class="text-blue-900 ">${new Date(doc.createTime).toLocaleString()}</div ></div><a  target="_blank" href="/doc.html?id=${doc.id}" class="block font-black line-clamp-5 p-2" id="doc-${doc.id}"></a></div>`
+                return `<div  class="my-4 rounded bg-gray-50 border block border-gray-100 text-xs"><div class="flex p-2 bg-gray-200"><div class="flex-1"> https://doc.op52.com/doc.html?id=${doc.id}</div><div class="text-blue-900 ">${new Date(doc.createTime).toLocaleString()}</div ></div><a  target="_blank" href="/doc.html?id=${doc.id}" class="block font-black line-clamp-10 p-2" id="doc-${doc.id}"></a></div>`
             }).join(''))
 
             if (list.length == 0) {
