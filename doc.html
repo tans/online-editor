@@ -87,6 +87,7 @@
             $saveBtn.addClass('loading');
             $.post('/api/doc-save', { id: id, content: $('#doc-textarea').val() }, function (data) {
                 $saveBtn.removeClass('loading');
+                toastr["info"]("save successful")
             })
         });
 
@@ -115,7 +116,7 @@
 
                 store.set('doc-' + id, doc);
 
-                toastr["info"]("save successful")
+
             })
         });
         $('body').on('keydown input', 'textarea[data-expandable]', function () {
