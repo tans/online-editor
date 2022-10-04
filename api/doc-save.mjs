@@ -9,7 +9,5 @@ export default async function handler(request, response) {
         { $set: { content: content } }
     );
 
-    // Todo back version
-    client.close();
     response.json(doc);
 }
