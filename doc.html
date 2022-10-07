@@ -90,6 +90,10 @@
             $saveBtn.addClass('loading');
             $.post('/api/doc-save', { id: id, content: texteditor.value() }, function (data) {
                 $saveBtn.removeClass('loading');
+
+                doc.content = texteditor.value();
+                store.set('doc-' + doc.id, doc);
+
                 toastr["info"]("save successful")
             }).fail(function () {
                 $saveBtn.removeClass('loading');
