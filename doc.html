@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js"></script>
     <title>Doc LIST | online text editor</title>
+
+
 </head>
 
 <body>
@@ -27,7 +29,7 @@
                 </button> -->
             </div>
         </div>
-        <div id="more" class="bg-green-50 p-4 text-2xs hidden ">
+        <div id="more" class="bg-green-50 p-4 text-2xs my-2 hidden ">
             <div>
                 <div>Editable URL:
                     <span id="editable-url"></span>
@@ -43,6 +45,7 @@
                 </div>
             </div> -->
         </div>
+
         <div id="loading" class="p-20">
             <svg class="text-blue-500 animate-spin  mx-auto h-5 w-5" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24" fill="none">
@@ -52,10 +55,10 @@
                 </path>
             </svg>
         </div>
-        <textarea id="doc-textarea" data-expandable placeholder="write here ..."
-            class="hidden resize-none border border-gray-200 min-h-16 w-full bg-gray-50 text-sm p-2 mt-2 text-black focus:outline-none"></textarea>
+        <textarea id="doc-textarea" data-expandable placeholder="write here ..." class="hidden"></textarea>
     </div>
     <script>
+        var texteditor = null;
 
         toastr.options = {
             "closeButton": false,
@@ -78,14 +81,14 @@
 
         let id = new URLSearchParams(location.search).get('id');
         $('#set-btn').attr('href', 'setting.html?id=' + id);
-        let $textarea = $('#doc-textarea');
+        // let $textarea = $('#doc-textarea');
         let $saveBtn = $('#save-btn')
         $saveBtn.on('click', function () {
             if ($saveBtn.hasClass('loading')) {
                 return
             };
             $saveBtn.addClass('loading');
-            $.post('/api/doc-save', { id: id, content: $('#doc-textarea').val() }, function (data) {
+            $.post('/api/doc-save', { id: id, content: texteditor.value() }, function (data) {
                 $saveBtn.removeClass('loading');
                 toastr["info"]("save successful")
             }).fail(function () {
@@ -95,6 +98,10 @@
         });
 
         $(function () {
+
+
+
+
             $saveBtn.addClass('loading').text('')
             $.get('/api/doc-get?id=' + id, function (doc) {
                 $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
@@ -102,9 +109,16 @@
                 $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
                 $('#loading').hide();
                 $('#more').show();
-                $textarea.show().val(doc.content);
-                $textarea[0].style.removeProperty('height');
-                $textarea[0].style.height = ($textarea[0].scrollHeight + 2) + 'px';
+
+                texteditor = new EasyMDE({
+                    toolbar: ["heading", "bold", "italic", "strikethrough", "unordered-list", "ordered-list", "link", "image", "side-by-side", "fullscreen"],
+                    element: document.getElementById('doc-textarea'), autofocus: true, spellChecker: false
+                });
+
+                texteditor.value(doc.content)
+                // $textarea.show().val(doc.content);
+                // $textarea[0].style.removeProperty('height');
+                // $textarea[0].style.height = ($textarea[0].scrollHeight + 2) + 'px';
                 $saveBtn.removeClass('loading').text('save')
                 let list = store.get('doc-list');
                 list = list ? JSON.parse(list) : [];
@@ -119,19 +133,228 @@
 
                 store.set('doc-' + id, doc);
 
-
             })
         });
-        $('body').on('keydown input', 'textarea[data-expandable]', function () {
-            //Auto-expanding textarea
-            this.style.removeProperty('height');
-            this.style.height = (this.scrollHeight + 2) + 'px';
-        }).on('mousedown focus', 'textarea[data-expandable]', function () {
-            //Do this on focus, to allow textarea to animate to height...
-            this.style.removeProperty('height');
-            this.style.height = (this.scrollHeight + 2) + 'px';
-        });
+        // $('body').on('keydown input', 'textarea[data-expandable]', function () {
+        //     //Auto-expanding textarea
+        //     this.style.removeProperty('height');
+        //     this.style.height = (this.scrollHeight + 2) + 'px';
+        // }).on('mousedown focus', 'textarea[data-expandable]', function () {
+        //     //Do this on focus, to allow textarea to animate to height...
+        //     this.style.removeProperty('height');
+        //     this.style.height = (this.scrollHeight + 2) + 'px';
+        // });
     </script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+
+    <style>
+        .EasyMDEContainer {
+            display: block;
+        }
+
+        .CodeMirror-rtl pre {
+            direction: rtl;
+        }
+
+        .EasyMDEContainer.sided--no-fullscreen {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .EasyMDEContainer .CodeMirror {
+            box-sizing: border-box;
+            height: auto;
+            border: 1px solid #ced4da;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            padding: 4px;
+            font: inherit;
+            font-size: 13px;
+            z-index: 0;
+            word-wrap: break-word;
+        }
+
+        .EasyMDEContainer .CodeMirror-scroll {
+            cursor: text;
+        }
+
+        .EasyMDEContainer .CodeMirror-fullscreen {
+            background: #fff;
+            position: fixed !important;
+            top: 50px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: auto;
+            z-index: 8;
+            border-right: none !important;
+            border-bottom-right-radius: 0 !important;
+        }
+
+        .EasyMDEContainer .CodeMirror-sided {
+            width: 50% !important;
+        }
+
+        .EasyMDEContainer.sided--no-fullscreen .CodeMirror-sided {
+            border-right: none !important;
+            border-bottom-right-radius: 0;
+            position: relative;
+            flex: 1 1 auto;
+        }
+
+        .EasyMDEContainer .CodeMirror-placeholder {
+            opacity: .5;
+        }
+
+        .EasyMDEContainer .CodeMirror-focused .CodeMirror-selected {
+            background: #d9d9d9;
+        }
+
+        .editor-toolbar {
+            position: relative;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+            padding: 4px 5px;
+            border-top: 1px solid #ced4da;
+            border-left: 1px solid #ced4da;
+            border-right: 1px solid #ced4da;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+        }
+
+
+
+
+        .editor-preview-active {
+            display: block
+        }
+
+        /* .editor-preview {
+            padding: 5px;
+            background: #fafafa;
+        }
+
+        .editor-preview>p {
+            margin-top: 0
+        }
+
+        .editor-preview pre {
+            background: #eee;
+            margin-bottom: 10px;
+        } */
+
+        .editor-preview table td,
+        .editor-preview table th {
+            border: 1px solid #ddd;
+            padding: 3px;
+        }
+
+        .cm-s-easymde .cm-tag {
+            color: #63a35c;
+        }
+
+        .cm-s-easymde .cm-attribute {
+            color: #795da3;
+        }
+
+        .cm-s-easymde .cm-string {
+            color: #183691;
+        }
+
+        .cm-s-easymde .cm-header-1 {
+            font-size: 18px;
+        }
+
+        .cm-s-easymde .cm-header-2 {
+            font-size: 16px;
+        }
+
+        .cm-s-easymde .cm-header-3 {
+            font-size: 15px;
+        }
+
+        .cm-s-easymde .cm-header-4 {
+            font-size: 14px;
+        }
+
+        .cm-s-easymde .cm-header-5 {
+            font-size: 13px;
+        }
+
+        .cm-s-easymde .cm-header-6 {
+            font-size: 12px;
+        }
+
+        .cm-s-easymde .cm-header-1,
+        .cm-s-easymde .cm-header-2,
+        .cm-s-easymde .cm-header-3,
+        .cm-s-easymde .cm-header-4,
+        .cm-s-easymde .cm-header-5,
+        .cm-s-easymde .cm-header-6 {
+            margin-bottom: .5rem;
+            line-height: 1.2;
+        }
+
+
+
+        h1 {
+            font-weight: bolder;
+            font-size: 18px;
+        }
+
+        h2 {
+            font-weight: bolder;
+            font-size: 16px;
+        }
+
+        h3 {
+            font-weight: bolder;
+            font-size: 15px;
+        }
+
+        h4 {
+            font-weight: bolder;
+            font-size: 14px;
+        }
+
+        h5 {
+            font-weight: bolder;
+            font-size: 13px;
+        }
+
+        h6 {
+            font-weight: bolder;
+            font-size: 12px;
+        }
+
+
+        /* .cm-s-easymde .cm-comment {
+            background: rgba(0, 0, 0, .05);
+            border-radius: 2px;
+        }
+
+        .cm-s-easymde .cm-link {
+            color: #7f8c8d;
+        }
+
+        .cm-s-easymde .cm-url {
+            color: #aab2b3;
+        }
+
+        .cm-s-easymde .cm-quote {
+            color: #7f8c8d;
+            font-style: italic;
+        } */
+    </style>
+
+
 </body>
 
 </html>
