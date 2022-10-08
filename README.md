@@ -10,11 +10,25 @@ https://doc.op52.com
 4. No ADs - no ad, no fee.
 5. Keep Secret - set and doc level password, no one can see the content without password
 6. View Mode - one doc has two url, view url and edit url
+ 
+ 
+## Deploy
 
-## Limits
+1. fork this repo
+2. Add Project in Vercel https://vercel.com/dashboard
+3. Vercel + MongoDB Integration https://vercel.com/integrations/mongodbatlas
 
-1. no rich content support.
-2. max 10k charaters
-3. online required, can't edit offline
-4. no account system, you need keep doc list yourself
-5. if you set doc level password, no way to recover if you lost it
+
+## Develop
+
+```
+npm install
+npm i vercel -g
+vercel dev
+```
+
+watch and update tailwindcss
+
+```
+npm run style
+```

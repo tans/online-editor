@@ -1,4 +1,7 @@
 {
+    "scripts": {
+        "style": "npx tailwindcss   -i app.css -o app.min.css --watch"
+    },
     "devDependencies": {
         "@tailwindcss/line-clamp": "^0.4.2",
         "daisyui": "^2.31.0",
