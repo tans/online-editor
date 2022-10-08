@@ -9,10 +9,16 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/store@2.0.12/dist/store.modern.min.js"></script>
     <title>Doc LIST | online text editor</title>
+    <style>
+        html,
+        body {
+            background-color: #fffffa;
+        }
+    </style>
 </head>
 
-<body>
-    <div class="max-w-screen-sm mx-auto p-1">
+<body class="min-h-screen">
+    <div class="max-w-screen-sm mx-auto p-2">
         <div class="my-2 flex items-center justify-between">
             <a href="/" class="btn btn-outline btn-sm">home</a>
             <div class="font-black text-lg">DOC LIST</div>
@@ -75,7 +81,7 @@
             let list = store.get('doc-list');
             list = list ? JSON.parse(list) : []
             $('#list-container').html(list.map(function (doc) {
-                return `<div  class="my-4 rounded bg-gray-50 border block border-gray-100 text-xs"><div class="flex p-2 bg-gray-200"><div class="flex-1"> https://doc.op52.com/doc.html?id=${doc.id}</div><div class="text-blue-900 ">${new Date(doc.createTime).toLocaleString()}</div ></div><a  target="_blank" href="/doc.html?id=${doc.id}" class="block font-black line-clamp-10 p-2" id="doc-${doc.id}"></a></div>`
+                return `<div  class="my-4 rounded bg-white border block border-gray-100 text-xs"><div class="flex p-2 bg-gray-100"><div class="flex-1"> https://doc.op52.com/doc.html?id=${doc.id}</div><div class="text-blue-900 ">${new Date(doc.createTime).toLocaleString()}</div ></div><a  target="_blank" href="/doc.html?id=${doc.id}" class="block font-black line-clamp-10 p-2" id="doc-${doc.id}"></a></div>`
             }).join(''))
 
             if (list.length == 0) {
