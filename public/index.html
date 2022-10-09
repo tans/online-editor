@@ -22,9 +22,10 @@
 
 <body>
 	<div class="max-w-screen-sm mx-auto p-4   min-h-screen">
-		<div class="flex items-center justify-between">
-			<h1 class="font-black text-lg my-4">Online Text Editor</h1>
-			<a class="btn btn-primary btn-sm" href="doclist.html">DOC LIST</a>
+		<div class="flex items-center">
+			<h1 class="font-black text-lg my-4 flex-1">Online Text Editor</h1>
+			<a class="btn btn-primary btn-sm  mr-2" href="doclist.html">DOC LIST</a>
+			<button id="new-btn" class="btn btn-outline btn-sm" href="doclist.html">NEW</button>
 		</div>
 
 		<a href="doclist.html">
@@ -91,19 +92,22 @@
 			</li> -->
 
 		</ul>
-		<div class="text-gray-600">
+
+
+		<!-- <div class="text-gray-600">
 			<h2 class="mt-8 font-black">Limits</h2>
 			<ul>
 				<li> 1. no rich content support. </li>
 				<li> 2. online required</li>
 				<li> 3. no account system, keep doc url by yourself.</li>
-				<!-- <li> 5. if you set doc level password, no way to recover if you lost it</li> -->
 			</ul>
-		</div>
+		</div> -->
 
 		<div id="stat-total" class="my-4 text-center font-black hidden">Total: <span></span></div>
 		<div class="my-4 text-gray-400 text-center text-sm">op52.com</div>
 	</div>
+
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/store@2.0.12/dist/store.modern.min.js"></script>
 
 	<script>
 
@@ -131,6 +135,19 @@
 			$('#stat-total span').text(data.cnt)
 			$('#stat-total').show()
 		})
+
+
+		$('#new-btn').on('click', function () {
+			$('#new-btn').addClass('loading')
+			$.get('/api/doc-create', function (data) {
+				$('#new-btn').removeClass('loading');
+				let list = store.get('doc-list');
+				list = list ? JSON.parse(list) : []
+				list.push(data)
+				store.set('doc-list', JSON.stringify(list))
+				location.href = "doc.html?id=" + data.id
+			})
+		});
 
 	</script>
 </body>
