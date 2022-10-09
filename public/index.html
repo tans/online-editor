@@ -100,6 +100,9 @@
 				<!-- <li> 5. if you set doc level password, no way to recover if you lost it</li> -->
 			</ul>
 		</div>
+
+		<div id="stat-total" class="my-4 text-center font-black hidden">Total: <span></span></div>
+		<div class="my-4 text-gray-400 text-center text-sm">op52.com</div>
 	</div>
 
 	<script>
@@ -123,6 +126,11 @@
 				}
 			})
 		}
+
+		$.get('/api/stat-count', function (data) {
+			$('#stat-total span').text(data.cnt)
+			$('#stat-total').show()
+		})
 
 	</script>
 </body>
