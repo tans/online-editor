@@ -11,6 +11,8 @@ https://doc.op52.com
 5. Keep Secret - set and doc level password, no one can see the content without password
 6. View Mode - one doc has two url, view url and edit url
  
+ <img src="public/resources/screenshot.png" style="width:400px" alt="screenshot"/>
+
  
 ## Deploy
 
