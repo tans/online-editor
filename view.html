@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+    <title>Doc | online text editor</title>
+    <link rel="stylesheet" href="https://unpkg.com/simpledotcss/simple.min.css">
+    <style>
+        html,
+        body {
+            font-size: 14px;
+
+        }
+
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 1rem;
+        }
+
+        footer a {
+            color: silver;
+            font-size: 12px;
+            display: block;
+            text-align: center;
+            padding: 4px;
+            margin: 0 auto;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="loading" style="margin: 100px auto; text-align: center; ">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 14 32 18" width="96" height="12" fill="#f20"
+                preserveAspectRatio="none">
+                <path opacity="0.8" transform="translate(0 0)" d="M2 14 V18 H6 V14z">
+                    <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s"
+                        begin="0" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+                        calcMode="spline" />
+                </path>
+                <path opacity="0.5" transform="translate(0 0)" d="M0 14 V18 H8 V14z">
+                    <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s"
+                        begin="0.1s" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+                        calcMode="spline" />
+                </path>
+                <path opacity="0.25" transform="translate(0 0)" d="M0 14 V18 H8 V14z">
+                    <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s"
+                        begin="0.2s" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+                        calcMode="spline" />
+                </path>
+            </svg>
+
+        </div>
+        <div id="content"></div>
+        <footer><a href="https://doc.52op.com">doc.52op.com</a></footer>
+    </div>
+    <!-- <link rel="stylesheet" type="text/css" href="./app.min.css"> -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        let vid = new URLSearchParams(location.search).get('vid');
+        $(function () {
+            $.get('/api/doc-view?vid=' + vid, function (doc) {
+                $('#content').html(marked.parse(doc.content));
+                $('footer a').show()
+                $('#loading').hide()
+            })
+        })
+    </script>
+</body>
+
+</html>

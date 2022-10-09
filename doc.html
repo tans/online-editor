@@ -22,12 +22,12 @@
 
 <body class="min-h-screen">
     <div class="max-w-screen-sm mx-auto min-h-screen p-2">
-        <div class="py-2 flex items-center justify-between sticky top-0 ">
+        <div class="py-2 flex items-center justify-between sticky top-0 z-10" style="background-color: #fffffa;">
             <a href="/doclist.html" class="btn btn-outline btn-sm">
                 back
             </a>
             <div class="flex items-center">
-                <button id="save-btn" class="btn btn-primary btn-sm mr-2">
+                <button id="save-btn" class="btn btn-primary btn-sm  ">
                     save
                 </button>
                 <!-- <button id="more-btn" class="btn btn-outline btn-sm">
@@ -35,21 +35,30 @@
                 </button> -->
             </div>
         </div>
-        <div id="more" class="bg-green-50 p-4 text-2xs my-2 hidden ">
+        <div id="more" class="p-2 text-2xs my-4 hidden border border-gray-200">
             <div>
-                <div>Editable URL:
+                <div class="flex">
+                    <span class="text-gray-400 w-20">
+                        Editable URL:
+                    </span>
                     <span id="editable-url"></span>
-
                 </div>
-                <div>Share Code:
-                    [<span class="text-red-500" id="editable-code"></span>]
+                <div class="flex">
+                    <span class="text-gray-400 w-20">
+                        Share Code:
+                    </span>
+                    <span class="text-red-500 " id="editable-code"></span>
+                    <span class="text-gray-600 text-sm mx-2">
+                        share code change everyday
+                    </span>
+                </div>
+                <div class="flex">
+                    <span class="text-gray-400 w-20">
+                        View URL:
+                    </span>
+                    <a target="_blank" id="view-url"></a>
                 </div>
             </div>
-            <!-- <div class="mt-2">
-                <div>ViewOnly URL:
-                    <span id="view-url"></span>
-                </div>
-            </div> -->
         </div>
 
         <div id="loading" class="p-20">
@@ -94,7 +103,7 @@
             $saveBtn.addClass('loading');
             $.post('/api/doc-save', { id: id, content: texteditor.value() }, function (data) {
                 $saveBtn.removeClass('loading');
-
+                let doc = store.get('doc-' + id);
                 doc.content = texteditor.value();
                 store.set('doc-' + doc.id, doc);
 
@@ -107,14 +116,11 @@
 
         $(function () {
 
-
-
-
             $saveBtn.addClass('loading').text('')
             $.get('/api/doc-get?id=' + id, function (doc) {
                 $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
                 $('#editable-code').text(doc.code.no)
-                $('#view-url').text('https://doc.op52.com/doc.html?vid=' + doc.vid)
+                $('#view-url').text('https://doc.op52.com/view.html?vid=' + doc.vid).attr('href', 'https://doc.op52.com/view.html?vid=' + doc.vid)
                 $('#loading').hide();
                 $('#more').show();
 
@@ -361,8 +367,6 @@
             font-style: italic;
         } */
     </style>
-
-
 </body>
 
 </html>
