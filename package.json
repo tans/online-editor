@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "style": "npx tailwindcss   -i app.css -o app.min.css --watch"
+        "style": "npx tailwindcss   -i public/resources/app.css -o public/resources/app.min.css --watch"
     },
     "devDependencies": {
         "@tailwindcss/line-clamp": "^0.4.2",
