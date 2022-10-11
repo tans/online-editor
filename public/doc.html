@@ -26,16 +26,16 @@
             <a href="/doclist.html" class="btn btn-outline btn-sm">
                 back
             </a>
-            <div class="flex items-center">
-                <button id="save-btn" class="btn btn-primary btn-sm  ">
+            <div class="flex items-center hidden" id="action-groups">
+                <button id="save-btn" class="btn btn-primary btn-sm mr-2">
                     save
                 </button>
-                <!-- <button id="more-btn" class="btn btn-outline btn-sm">
-                    more
-                </button> -->
+                <a id="view-btn" target="_blank" class="btn btn-outline btn-sm flex">
+                    view
+                </a>
             </div>
         </div>
-        <div id="more" class="p-2 text-2xs my-4 hidden border border-gray-200">
+        <!-- <div id="more" class="p-2 text-2xs my-4 hidden border border-gray-200">
             <div>
                 <div class="flex">
                     <span class="text-gray-400 w-20">
@@ -59,7 +59,15 @@
                     <a target="_blank" id="view-url"></a>
                 </div>
             </div>
-        </div>
+        </div> -->
+
+        
+        <textarea id="doc-textarea" data-expandable placeholder="write here ..." class="hidden"></textarea>
+
+        <div class="text-sm mt-8">tips:</div>
+        <div class="text-gray-400 text-sm ">1. use share code to quick access this doc, change every day [ <span class="text-red-800" id="editable-code">loading</span> ]</div>
+        <div class="text-gray-400 text-sm ">2. and you can direct share the url of this page</div>
+        <div class="text-gray-400 text-sm ">3. if need view only mode, click `view` button to viewonly page</div>
 
         <div id="loading" class="p-20">
             <svg class="text-blue-500 animate-spin  mx-auto h-5 w-5" xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +78,6 @@
                 </path>
             </svg>
         </div>
-        <textarea id="doc-textarea" data-expandable placeholder="write here ..." class="hidden"></textarea>
     </div>
     <script>
         var texteditor = null;
@@ -118,11 +125,12 @@
 
             $saveBtn.addClass('loading').text('')
             $.get('/api/doc-get?id=' + id, function (doc) {
-                $('#editable-url').text('https://doc.op52.com/doc.html?id=' + doc.id)
+                
                 $('#editable-code').text(doc.code.no)
-                $('#view-url').text('https://doc.op52.com/view.html?vid=' + doc.vid).attr('href', 'https://doc.op52.com/view.html?vid=' + doc.vid)
+                $('#view-btn').attr('href', 'https://doc.op52.com/view.html?vid=' + doc.vid).attr('href', 'https://doc.op52.com/view.html?vid=' + doc.vid);
+                $('#action-groups').removeClass('hidden');
                 $('#loading').hide();
-                $('#more').show();
+                // $('#more').show();
 
                 texteditor = new EasyMDE({
                     toolbar: ["heading", "bold", "italic", "strikethrough", "unordered-list", "ordered-list", "link", "image", "side-by-side", "fullscreen"],
